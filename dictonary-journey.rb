@@ -26,9 +26,6 @@ word_two_copy_one =  word_two.dup
 word_one_copy_two =  word_one.dup
 word_two_copy_two =  word_two.dup
 
-
-
-
 starting_word_search = Thread.new do
   chain = []
   attempted_words = Set.new
