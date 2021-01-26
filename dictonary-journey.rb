@@ -8,20 +8,19 @@ dictionary = IO.readlines('words.txt').map(&:chomp).to_set
 
 if ARGV.length.zero?
   puts 'No words provided, picking two random words from dictionary.'
-	word_one = dictionary.to_a.sample
+  word_one = dictionary.to_a.sample
   puts "Word one is #{word_one}"
-	word_two = dictionary.to_a.sample
+  word_two = dictionary.to_a.sample
   puts "Word two is #{word_two}"
 elsif (ARGV.length == 2) && dictionary.include?(ARGV[0]) && dictionary.include?(ARGV[1])
-	word_one = ARGV[0]
-	word_two = ARGV[1]
+  word_one = ARGV[0]
+  word_two = ARGV[1]
 else
   abort('Incorrect arguments provided. Either provide no arguments, or two arguments that are valid words.')
 end
 
 word_one_copy_one =  word_one.dup
 word_two_copy_one =  word_two.dup
-
 
 word_one_copy_two =  word_one.dup
 word_two_copy_two =  word_two.dup
@@ -84,10 +83,10 @@ starting_word_search = Thread.new do
     else
       if chain.length == 1
         abort("Forward search. After exploring every leaf on the starting word graph, we have not found the target word. #{attempted_words.map do |word|
-                                                                                                             "#{word} - #{levenshtein_distance(
-                                                                                                               word, word_two_copy_one
-                                                                                                             )}"
-                                                                                                           end }")
+                                                                                                                             "#{word} - #{levenshtein_distance(
+                                                                                                                               word, word_two_copy_one
+                                                                                                                             )}"
+                                                                                                                           end }")
       end
       # We've tried all leaves, shave off the current word in our chain
       # and explore any unexplored leaves that branch off the previous word
@@ -111,9 +110,9 @@ target_word_search = Thread.new do
   chain = []
   attempted_words = Set.new
 
-	# Intentionally switching these to search from the other side. If either thread aborts, they both can.
+  # Intentionally switching these to search from the other side. If either thread aborts, they both can.
   next_step = word_two_copy_two.dup
-	target_word = word_one_copy_two
+  target_word = word_one_copy_two
 
   while next_step != target_word
 
@@ -168,10 +167,10 @@ target_word_search = Thread.new do
     else
       if chain.length == 1
         abort("Backward search. After exploring every leaf on the starting word graph, we have not found the target word. #{attempted_words.map do |word|
-                                                                                                             "#{word} - #{levenshtein_distance(
-                                                                                                               word, word_one_copy_two
-                                                                                                             )}"
-                                                                                                           end }")
+                                                                                                                              "#{word} - #{levenshtein_distance(
+                                                                                                                                word, word_one_copy_two
+                                                                                                                              )}"
+                                                                                                                            end }")
       end
       # We've tried all leaves, shave off the current word in our chain
       # and explore any unexplored leaves that branch off the previous word
