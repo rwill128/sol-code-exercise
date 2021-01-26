@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-
 require('rubygems/text')
 require('set')
 include Gem::Text
@@ -11,7 +10,6 @@ chain = []
 attempted_words = Set.new
 
 next_step = original_word.dup
-current_distance = levenshtein_distance(next_step, target_word)
 while next_step != target_word
   attempted_words.add(next_step)
   chain.append(next_step)
@@ -41,7 +39,7 @@ while next_step != target_word
   # Find every word we haven't attempted yet
   real_possible_steps = (possible_steps.to_set - attempted_words).to_a
 
-  # We have possible choices that we haven't
+  # We have possible leaves that we haven't tried yet
   if !real_possible_steps.empty?
     # For every word we haven't attempted yet, find the levenshtein distance from our target word
     step_scores = real_possible_steps.map { |step| levenshtein_distance(step, target_word) }
@@ -51,6 +49,8 @@ while next_step != target_word
     if chain.length.zero?
       abort('After exploring every leaf on the starting word graph, we have not found the target word.')
     end
+    # We've tried all leaves, shave off the current word in our chain
+    # and explore any unexplored leaves that branch off the previous word
     chain.delete_at(chain.length - 1)
     next_step = chain[chain.length - 1]
   end
