@@ -103,7 +103,7 @@ starting_word_search = Thread.new do
 
   score_history = chain.map { |word| "#{word} - #{levenshtein_distance(word, word_two_copy_one)}" }
 
-  puts "Forward search. Chain is #{score_history.length} items long. This is the search chain: #{score_history.uniq!}"
+  puts "Forward search. Chain is #{score_history.uniq.length} items long. This is the search chain: #{score_history.uniq}"
 end
 
 target_word_search = Thread.new do
@@ -187,7 +187,7 @@ target_word_search = Thread.new do
 
   score_history = chain.map { |word| "#{word} - #{levenshtein_distance(word, word_one_copy_two)}" }
 
-  puts "Backward search #{score_history.uniq!}"
+  "Backward search. Chain is #{score_history.uniq.length} items long. This is the search chain: #{score_history.uniq}"
 end
 
 puts 'Getting value on forward search.'
