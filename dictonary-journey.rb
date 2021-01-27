@@ -99,8 +99,6 @@ starting_word_search = Thread.new do
     end
   end
 
-  chain.append(next_step)
-
   score_history = chain.map { |word| "#{word} - #{levenshtein_distance(word, word_two_copy_one)}" }
 
   puts "Forward search. Chain is #{score_history.uniq.length} items long. This is the search chain: #{score_history.uniq}"
@@ -182,8 +180,6 @@ target_word_search = Thread.new do
       )}."
     end
   end
-
-  chain.append(next_step)
 
   score_history = chain.map { |word| "#{word} - #{levenshtein_distance(word, word_one_copy_two)}" }
 
